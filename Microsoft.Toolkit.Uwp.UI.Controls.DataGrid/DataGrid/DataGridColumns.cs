@@ -14,6 +14,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
+using System.Dynamic;
 using System.Linq;
 using System.Reflection;
 using Microsoft.Toolkit.Uwp.UI.Controls.DataGridInternals;
@@ -1626,6 +1627,17 @@ namespace Microsoft.Toolkit.Uwp.UI.Controls
             {
                 AddGeneratedColumn(GenerateColumn(this.DataConnection.DataType, string.Empty, this.DataConnection.DataType.Name));
             }
+			else if (DataConnection.DataType == typeof(ExpandoObject))
+			{
+				var properties = DataConnection.FirstDataItem as IDictionary<string, object>;
+				if (properties != null)
+				{ 
+					foreach (var property in properties)
+					{
+						AddGeneratedColumn(GenerateColumn(property.Value?.GetType() ?? typeof(string), property.Key, property.Key));
+					}
+				}
+			}
         }
 
         private bool GetColumnEffectiveReadOnlyState(DataGridColumn dataGridColumn)

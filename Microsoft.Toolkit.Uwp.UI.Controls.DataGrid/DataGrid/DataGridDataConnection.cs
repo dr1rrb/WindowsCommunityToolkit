@@ -17,6 +17,7 @@ using System.Collections.Specialized;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
+using System.Dynamic;
 using System.Linq;
 using System.Reflection;
 using Microsoft.Toolkit.Uwp.UI.Data.Utilities;
@@ -203,6 +204,8 @@ namespace Microsoft.Toolkit.Uwp.UI.Controls.DataGridInternals
             }
         }
 
+		public object FirstDataItem => _owner.ItemsSource?.Cast<object>().FirstOrDefault();
+
 #if FEATURE_IEDITABLECOLLECTIONVIEW
         public IEditableCollectionView EditableCollectionView
         {
@@ -213,7 +216,7 @@ namespace Microsoft.Toolkit.Uwp.UI.Controls.DataGridInternals
         }
 #endif
 
-        public bool EndingEdit
+		public bool EndingEdit
         {
             get;
             private set;
@@ -912,19 +915,19 @@ namespace Microsoft.Toolkit.Uwp.UI.Controls.DataGridInternals
             }
         }
 
-        private void UpdateDataProperties()
-        {
-            Type dataType = this.DataType;
+		private void UpdateDataProperties()
+		{
+			Type dataType = this.DataType;
 
-            if (this.DataSource != null && dataType != null && !DataTypeIsPrimitive(dataType))
-            {
-                _dataProperties = dataType.GetProperties(BindingFlags.Public | BindingFlags.Instance);
-                Debug.Assert(_dataProperties != null, "Expected non-null _dataProperties.");
-            }
-            else
-            {
-                _dataProperties = null;
-            }
-        }
-    }
+			if (this.DataSource != null && dataType != null && !DataTypeIsPrimitive(dataType))
+			{
+				_dataProperties = dataType.GetProperties(BindingFlags.Public | BindingFlags.Instance);
+				Debug.Assert(_dataProperties != null, "Expected non-null _dataProperties.");
+			}
+			else
+			{
+				_dataProperties = null;
+			}
+		}
+	}
 }
