@@ -1,12 +1,20 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>uap10.0</TargetFramework>
+    <TargetFrameworks>uap10.0;netstandard2.0</TargetFrameworks>
     <Title>Windows Community Toolkit Controls DataGrid</Title>
     <Description>This library provides a XAML DataGrid control. It is part of the Windows Community Toolkit.</Description>
     <PackageTags>UWP Toolkit Windows Controls XAML DataGrid</PackageTags>
     <RootNamespace>Microsoft.Toolkit.Uwp.UI.Controls</RootNamespace>
     <UseUwpMetaPackage>true</UseUwpMetaPackage>
   </PropertyGroup>
+  <ItemGroup>
+    <None Remove="DataGrid\DataGrid.xaml" />
+    <None Remove="Themes\Generic.xaml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Remove="DataGrid\DataGrid.xaml" />
+    <Page Remove="Themes\Generic.xaml" />
+  </ItemGroup>
 
   <ItemGroup>
     <None Include="VisualStudioToolsManifest.xml" Pack="true" PackagePath="tools" />
@@ -26,6 +34,10 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Themes\" />
   </ItemGroup>
   
   <Import Project="$(MSBuildSDKExtrasTargets)" Condition="Exists('$(MSBuildSDKExtrasTargets)')" />

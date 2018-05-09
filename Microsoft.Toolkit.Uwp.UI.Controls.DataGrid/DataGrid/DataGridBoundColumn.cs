@@ -72,7 +72,9 @@ namespace Microsoft.Toolkit.Uwp.UI.Controls
                         _binding.ValidatesOnExceptions = true;
                         _binding.NotifyOnValidationError = true;
 #endif
-                        _binding.UpdateSourceTrigger = UpdateSourceTrigger.Explicit;
+						// TODO: Uno
+						// Explciit mode (UpdateSource) is not supported yet
+						_binding.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
 
                         // Apply the new Binding to existing rows in the DataGrid
                         if (this.OwningGrid != null)

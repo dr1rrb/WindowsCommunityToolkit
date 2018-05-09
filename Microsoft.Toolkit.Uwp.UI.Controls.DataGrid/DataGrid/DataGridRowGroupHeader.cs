@@ -43,7 +43,7 @@ namespace Microsoft.Toolkit.Uwp.UI.Controls
     [TemplatePart(Name = DATAGRIDROWGROUPHEADER_propertyNameElement, Type = typeof(TextBlock))]
     [TemplatePart(Name = DATAGRIDROWGROUPHEADER_propertyValueElement, Type = typeof(TextBlock))]
     [StyleTypedProperty(Property = "HeaderStyle", StyleTargetType = typeof(DataGridRowHeader))]
-    public class DataGridRowGroupHeader : Control
+    public partial class DataGridRowGroupHeader : Control
     {
         private const string DATAGRIDROWGROUPHEADER_bottomGridLine = "BottomGridLine";
         private const string DATAGRIDROWGROUPHEADER_expanderButton = "ExpanderButton";

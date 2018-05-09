@@ -26,7 +26,7 @@ namespace Microsoft.Toolkit.Uwp.UI.Controls.Primitives
     /// Used within the template of a <see cref="DataGrid"/> to specify the
     /// location in the control's visual tree where the rows are to be added.
     /// </summary>
-    public sealed class DataGridRowsPresenter : Panel
+    public sealed partial class DataGridRowsPresenter : Panel
     {
         private double _preManipulationHorizontalOffset;
         private double _preManipulationVerticalOffset;

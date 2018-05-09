@@ -532,12 +532,13 @@ namespace Microsoft.Toolkit.Uwp.UI.Controls.DataGridInternals
                         }
 
                         // Check if EditableAttribute is defined on the property and if it indicates uneditable
-                        EditableAttribute editableAttribute = null;
-                        editableAttribute = propertyInfo.GetCustomAttributes().OfType<EditableAttribute>().FirstOrDefault();
-                        if (editableAttribute != null && !editableAttribute.AllowEdit)
-                        {
-                            return true;
-                        }
+						// TODO: Uno
+                        //EditableAttribute editableAttribute = null;
+                        //editableAttribute = propertyInfo.GetCustomAttributes().OfType<EditableAttribute>().FirstOrDefault();
+                        //if (editableAttribute != null && !editableAttribute.AllowEdit)
+                        //{
+                        //    return true;
+                        //}
 
                         propertyType = propertyInfo.PropertyType.GetNonNullableType();
                     }

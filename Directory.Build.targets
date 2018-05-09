@@ -23,4 +23,42 @@
     </When>
   </Choose>
 
+   <Choose>
+	<When Condition="'$(TargetFramework)' == 'netstandard2.0'">
+	  <PropertyGroup>
+		<DefineConstants>${DefineConstants};WINDOWS_UWP;__WASM__</DefineConstants>
+	  </PropertyGroup>
+	
+      <ItemGroup>
+        <PackageReference Include="Uno.UI" Version="1.29.1-aobfwasm.2836" />
+		<PackageReference Include="System.ComponentModel.Annotations" Version="4.5.0-rc1" />
+      </ItemGroup>
+    </When>
+  </Choose>
+  
+  <Choose>
+	<When Condition="'$(TargetFramework)' == 'xamarinios10'">
+	  <PropertyGroup>
+		<DefineConstants>${DefineConstants};WINDOWS_UWP;__WASM__</DefineConstants>
+	  </PropertyGroup>
+	
+      <ItemGroup>
+        <PackageReference Include="Uno.UI" Version="1.29.1-aobfwasm.2836" />
+		<PackageReference Include="System.ComponentModel.Annotations" Version="4.5.0-rc1" />
+      </ItemGroup>
+    </When>
+  </Choose>
+  
+  <Choose>
+	<When Condition="'$(TargetFramework)' == 'MonoAndroid80'">
+	  <PropertyGroup>
+		<DefineConstants>${DefineConstants};WINDOWS_UWP;__WASM__</DefineConstants>
+	  </PropertyGroup>
+	
+      <ItemGroup>
+        <PackageReference Include="Uno.UI" Version="1.29.1-aobfwasm.2836" />
+		<PackageReference Include="System.ComponentModel.Annotations" Version="4.5.0-rc1" />
+      </ItemGroup>
+    </When>
+  </Choose>
 </Project>

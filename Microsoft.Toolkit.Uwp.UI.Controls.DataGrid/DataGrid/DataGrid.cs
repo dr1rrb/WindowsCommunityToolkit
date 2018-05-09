@@ -166,7 +166,7 @@ namespace Microsoft.Toolkit.Uwp.UI.Controls
         private bool _executingLostFocusActions;
         private bool _flushCurrentCellChanged;
         private bool _focusEditingControl;
-        private FocusInputDeviceKind _focusInputDevice;
+        //private FocusInputDeviceKind _focusInputDevice; // TODO: Uno
         private DependencyObject _focusedObject;
         private DataGridRow _focusedRow;
         private FrameworkElement _frozenColumnScrollBarSpacer;
@@ -427,8 +427,8 @@ namespace Microsoft.Toolkit.Uwp.UI.Controls
             this.DataConnection = new DataGridDataConnection(this);
             _showDetailsTable = new IndexToValueTable<Visibility>();
 
-            _focusInputDevice = FocusInputDeviceKind.None;
-            _proposedScrollBarsState = ScrollBarVisualState.NoIndicator;
+			//_focusInputDevice = FocusInputDeviceKind.None; // TODO: Uno
+			_proposedScrollBarsState = ScrollBarVisualState.NoIndicator;
             _proposedScrollBarsSeparatorState = ScrollBarsSeparatorVisualState.SeparatorCollapsed;
 
             this.AnchorSlot = -1;
@@ -2042,7 +2042,7 @@ namespace Microsoft.Toolkit.Uwp.UI.Controls
                         throw DataGridError.DataGrid.NoCurrentRow();
                     }
 
-                    bool beginEdit = _editingColumnIndex != -1;
+					bool beginEdit = _editingColumnIndex != -1;
                     if (!EndCellEdit(DataGridEditAction.Commit, true /*exitEditingMode*/, this.ContainsFocus /*keepFocus*/, true /*raiseEvents*/))
                     {
                         // Edited value couldn't be committed or aborted
@@ -2907,14 +2907,14 @@ namespace Microsoft.Toolkit.Uwp.UI.Controls
         /// <returns>True if operation was successful. False otherwise.</returns>
         public bool CommitEdit(DataGridEditingUnit editingUnit, bool exitEditingMode)
         {
-            if (!EndCellEdit(DataGridEditAction.Commit, editingUnit == DataGridEditingUnit.Cell ? exitEditingMode : true, this.ContainsFocus /*keepFocus*/, true /*raiseEvents*/))
+			if (!EndCellEdit(DataGridEditAction.Commit, editingUnit == DataGridEditingUnit.Cell ? exitEditingMode : true, this.ContainsFocus /*keepFocus*/, true /*raiseEvents*/))
             {
                 return false;
             }
 
             if (editingUnit == DataGridEditingUnit.Row)
             {
-                return EndRowEdit(DataGridEditAction.Commit, exitEditingMode, true /*raiseEvents*/);
+				return EndRowEdit(DataGridEditAction.Commit, exitEditingMode, true /*raiseEvents*/);
             }
 
             return true;
@@ -3124,7 +3124,7 @@ namespace Microsoft.Toolkit.Uwp.UI.Controls
         /// </summary>
         public class DisplayIndexComparer : IComparer<DataGridColumn>
         {
-            // Calls CaseInsensitiveComparer.Compare with the parameters reversed.
+            // Calls CaseInsensitiveComparer.Compare with the parameters reversed.	
             int IComparer<DataGridColumn>.Compare(DataGridColumn x, DataGridColumn y)
             {
                 return (x.DisplayIndexWithFiller < y.DisplayIndexWithFiller) ? -1 : 1;
@@ -3658,7 +3658,7 @@ namespace Microsoft.Toolkit.Uwp.UI.Controls
         /// <returns>True if operation was successful. False otherwise.</returns>
         internal bool CancelEdit(DataGridEditingUnit editingUnit, bool raiseEvents)
         {
-            if (!EndCellEdit(DataGridEditAction.Cancel, true, this.ContainsFocus /*keepFocus*/, raiseEvents))
+			if (!EndCellEdit(DataGridEditAction.Cancel, true, this.ContainsFocus /*keepFocus*/, raiseEvents))
             {
                 return false;
             }
@@ -4627,9 +4627,9 @@ namespace Microsoft.Toolkit.Uwp.UI.Controls
                 !GetRowSelection(this.CurrentSlot) ||
                 (this.EditingRow == null && !BeginRowEdit(dataGridRow)))
             {
-                // If either BeginningEdit was canceled, currency/selection was changed in the event handler,
-                // or we failed opening the row for edit, then we can no longer continue BeginCellEdit
-                return false;
+				// If either BeginningEdit was canceled, currency/selection was changed in the event handler,
+				// or we failed opening the row for edit, then we can no longer continue BeginCellEdit
+				return false;
             }
 
             if (this.EditingRow == null || this.EditingRow.Slot != this.CurrentSlot)
@@ -4649,7 +4649,7 @@ namespace Microsoft.Toolkit.Uwp.UI.Controls
 
         private bool BeginRowEdit(DataGridRow dataGridRow)
         {
-            Debug.Assert(this.EditingRow == null, "Expected non-null EditingRow.");
+			Debug.Assert(this.EditingRow == null, "Expected non-null EditingRow.");
             Debug.Assert(dataGridRow != null, "Expected non-null dataGridRow.");
 
             Debug.Assert(this.CurrentSlot >= -1, "Expected CurrentSlot greater than or equal to -1.");
@@ -4668,10 +4668,10 @@ namespace Microsoft.Toolkit.Uwp.UI.Controls
                     peer.RaiseAutomationInvokeEvents(DataGridEditingUnit.Row, null, dataGridRow);
                 }
 
-                return true;
+				return true;
             }
 
-            return false;
+			return false;
         }
 
         private bool CancelRowEdit(bool exitEditingMode)
@@ -4709,7 +4709,7 @@ namespace Microsoft.Toolkit.Uwp.UI.Controls
         {
             if (forCurrentCellChange)
             {
-                if (!EndCellEdit(DataGridEditAction.Commit, true /*exitEditingMode*/, true /*keepFocus*/, true /*raiseEvents*/))
+				if (!EndCellEdit(DataGridEditAction.Commit, true /*exitEditingMode*/, true /*keepFocus*/, true /*raiseEvents*/))
                 {
                     return false;
                 }
@@ -5367,12 +5367,13 @@ namespace Microsoft.Toolkit.Uwp.UI.Controls
             }
         }
 
-        private void DataGrid_GettingFocus(UIElement sender, GettingFocusEventArgs e)
-        {
-            _focusInputDevice = e.InputDevice;
-        }
+		// TODO: Uno
+		//private void DataGrid_GettingFocus(UIElement sender, GettingFocusEventArgs e)
+		//{
+		//    _focusInputDevice = e.InputDevice;
+		//}
 
-        private void DataGrid_GotFocus(object sender, RoutedEventArgs e)
+		private void DataGrid_GotFocus(object sender, RoutedEventArgs e)
         {
             if (!this.ContainsFocus)
             {
@@ -5401,9 +5402,10 @@ namespace Microsoft.Toolkit.Uwp.UI.Controls
                 focusedElement = VisualTreeHelper.GetParent(focusedElement);
             }
 
-            _preferMouseIndicators = _focusInputDevice == FocusInputDeviceKind.Mouse || _focusInputDevice == FocusInputDeviceKind.Pen;
+			// TODO: Uno
+			//_preferMouseIndicators = _focusInputDevice == FocusInputDeviceKind.Mouse || _focusInputDevice == FocusInputDeviceKind.Pen;
 
-            ShowScrollBars();
+			ShowScrollBars();
 
             // If the DataGrid itself got focus, we actually want the automation focus to be on the current element
             if (e.OriginalSource == this && AutomationPeer.ListenerExists(AutomationEvents.AutomationFocusChanged))
@@ -5474,7 +5476,11 @@ namespace Microsoft.Toolkit.Uwp.UI.Controls
 
         private void DataGrid_LostFocus(object sender, RoutedEventArgs e)
         {
-            _focusedObject = null;
+			// TODO: Uno
+			// If the DataGrid handle it lost focus, it will EndEdit immediately ...
+			return;
+
+			_focusedObject = null;
             if (this.ContainsFocus)
             {
                 bool focusLeftDataGrid = true;
@@ -5569,10 +5575,11 @@ namespace Microsoft.Toolkit.Uwp.UI.Controls
         private void DataGrid_PointerMoved(object sender, PointerRoutedEventArgs e)
         {
             // Don't process if this is a generated replay of the event.
-            if (/* TODO this.IsRS3OrHigher &&*/ e.IsGenerated)
-            {
-                return;
-            }
+			// TODO: Uno
+            //if (/* TODO this.IsRS3OrHigher &&*/ e.IsGenerated)
+            //{
+            //    return;
+            //}
 
             if (e.Pointer.PointerDeviceType != PointerDeviceType.Touch)
             {
@@ -5630,6 +5637,8 @@ namespace Microsoft.Toolkit.Uwp.UI.Controls
 
         private bool EndCellEdit(DataGridEditAction editAction, bool exitEditingMode, bool keepFocus, bool raiseEvents)
         {
+			Console.Error.WriteLine($"EndEdit: action:{editAction} / exitEditingMode:{exitEditingMode} / keepFocus:{keepFocus} / raiseEvents:{raiseEvents}");
+
             if (_editingColumnIndex == -1)
             {
                 return true;
@@ -5650,7 +5659,7 @@ namespace Microsoft.Toolkit.Uwp.UI.Controls
             FrameworkElement editingElement = editingCell.Content as FrameworkElement;
             if (editingElement == null)
             {
-                return false;
+				return false;
             }
 
             if (raiseEvents)
@@ -5659,8 +5668,8 @@ namespace Microsoft.Toolkit.Uwp.UI.Controls
                 OnCellEditEnding(e);
                 if (e.Cancel)
                 {
-                    // CellEditEnding has been cancelled
-                    return false;
+					// CellEditEnding has been cancelled
+					return false;
                 }
 
                 // Ensure that the current cell wasn't changed in the user's CellEditEnding handler
@@ -5668,7 +5677,7 @@ namespace Microsoft.Toolkit.Uwp.UI.Controls
                     currentSlot != this.CurrentSlot ||
                     currentColumnIndex != this.CurrentColumnIndex)
                 {
-                    return true;
+					return true;
                 }
 
                 Debug.Assert(this.EditingRow != null, "Expected non-null EditingRow.");
@@ -5703,8 +5712,8 @@ namespace Microsoft.Toolkit.Uwp.UI.Controls
 
             // If we're committing, explicitly update the source but watch out for any validation errors
             if (editAction == DataGridEditAction.Commit)
-            {
-                foreach (BindingInfo bindingData in this.CurrentColumn.GetInputBindings(editingElement, this.CurrentItem))
+			{
+				foreach (BindingInfo bindingData in this.CurrentColumn.GetInputBindings(editingElement, this.CurrentItem))
                 {
                     Debug.Assert(bindingData.BindingExpression.ParentBinding != null, "Expected non-null bindingData.BindingExpression.ParentBinding.");
                     _updateSourcePath = bindingData.BindingExpression.ParentBinding.Path != null ? bindingData.BindingExpression.ParentBinding.Path.Path : null;
@@ -5733,7 +5742,7 @@ namespace Microsoft.Toolkit.Uwp.UI.Controls
                 }
             }
 
-            if (exitEditingMode)
+			if (exitEditingMode)
             {
                 _editingColumnIndex = -1;
                 editingCell.ApplyCellState(true /*animate*/);
@@ -6046,7 +6055,7 @@ namespace Microsoft.Toolkit.Uwp.UI.Controls
                 _focusEditingControl = !success;
             }
 
-            return success;
+			return success;
         }
 
         /// <summary>
@@ -6181,7 +6190,7 @@ namespace Microsoft.Toolkit.Uwp.UI.Controls
             this.IsEnabledChanged += new DependencyPropertyChangedEventHandler(DataGrid_IsEnabledChanged);
             this.KeyDown += new KeyEventHandler(DataGrid_KeyDown);
             this.KeyUp += new KeyEventHandler(DataGrid_KeyUp);
-            this.GettingFocus += new TypedEventHandler<UIElement, GettingFocusEventArgs>(DataGrid_GettingFocus);
+            //this.GettingFocus += new TypedEventHandler<UIElement, GettingFocusEventArgs>(DataGrid_GettingFocus);
             this.GotFocus += new RoutedEventHandler(DataGrid_GotFocus);
             this.LostFocus += new RoutedEventHandler(DataGrid_LostFocus);
             this.PointerEntered += new PointerEventHandler(DataGrid_PointerEntered);
@@ -6803,8 +6812,8 @@ namespace Microsoft.Toolkit.Uwp.UI.Controls
                 return true;
             }
 
-            // Try to commit the potential editing
-            if (oldCurrentSlot == this.CurrentSlot && EndCellEdit(DataGridEditAction.Commit, true /*exitEditingMode*/, true /*keepFocus*/, true /*raiseEvents*/) && this.EditingRow != null)
+			// Try to commit the potential editing
+			if (oldCurrentSlot == this.CurrentSlot && EndCellEdit(DataGridEditAction.Commit, true /*exitEditingMode*/, true /*keepFocus*/, true /*raiseEvents*/) && this.EditingRow != null)
             {
                 EndRowEdit(DataGridEditAction.Commit, true /*exitEditingMode*/, true /*raiseEvents*/);
                 ScrollIntoView(this.CurrentItem, this.CurrentColumn);
@@ -6822,8 +6831,8 @@ namespace Microsoft.Toolkit.Uwp.UI.Controls
 
             if (_editingColumnIndex != -1)
             {
-                // Revert the potential cell editing and exit cell editing.
-                EndCellEdit(DataGridEditAction.Cancel, true /*exitEditingMode*/, true /*keepFocus*/, true /*raiseEvents*/);
+				// Revert the potential cell editing and exit cell editing.
+				EndCellEdit(DataGridEditAction.Cancel, true /*exitEditingMode*/, true /*keepFocus*/, true /*raiseEvents*/);
                 return true;
             }
             else if (this.EditingRow != null)
@@ -7597,7 +7606,7 @@ namespace Microsoft.Toolkit.Uwp.UI.Controls
 
         private void ResetEditingRow()
         {
-            DataGridRow oldEditingRow = this.EditingRow;
+			DataGridRow oldEditingRow = this.EditingRow;
             if (oldEditingRow != null &&
                 oldEditingRow != _focusedRow &&
                 !IsSlotVisible(oldEditingRow.Slot))
@@ -7774,7 +7783,7 @@ namespace Microsoft.Toolkit.Uwp.UI.Controls
                     bool keepFocus = this.ContainsFocus;
                     if (commitEdit)
                     {
-                        if (!EndCellEdit(DataGridEditAction.Commit, true /*exitEditingMode*/, keepFocus, true /*raiseEvents*/))
+						if (!EndCellEdit(DataGridEditAction.Commit, true /*exitEditingMode*/, keepFocus, true /*raiseEvents*/))
                         {
                             return false;
                         }

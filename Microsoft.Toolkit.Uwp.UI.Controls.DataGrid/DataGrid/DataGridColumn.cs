@@ -29,7 +29,7 @@ namespace Microsoft.Toolkit.Uwp.UI.Controls
     [StyleTypedProperty(Property = "CellStyle", StyleTargetType = typeof(DataGridCell))]
     [StyleTypedProperty(Property = "DragIndicatorStyle", StyleTargetType = typeof(ContentControl))]
     [StyleTypedProperty(Property = "HeaderStyle", StyleTargetType = typeof(DataGridColumnHeader))]
-    public abstract class DataGridColumn : DependencyObject
+    public abstract partial class DataGridColumn : DependencyObject
     {
         private const bool DATAGRIDCOLUMN_defaultCanUserReorder = true;
         private const bool DATAGRIDCOLUMN_defaultCanUserResize = true;
@@ -1162,7 +1162,7 @@ namespace Microsoft.Toolkit.Uwp.UI.Controls
                         binding.Source = bindingData.BindingExpression.ParentBinding.Source;
                         binding.TargetNullValue = bindingData.BindingExpression.ParentBinding.TargetNullValue;
                         binding.UpdateSourceTrigger = UpdateSourceTrigger.Explicit;
-                        bindingData.Element.SetBinding(bindingData.BindingTarget, binding);
+						bindingData.Element.SetBinding(bindingData.BindingTarget, binding);
                         bindingData.BindingExpression = bindingData.Element.GetBindingExpression(bindingData.BindingTarget);
                     }
                 }
